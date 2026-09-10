@@ -8,6 +8,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-WQH6FL52');</script>
 <!-- End Google Tag Manager -->
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La Gambeta — Pizzería Bar, Palermo</title>
@@ -123,7 +124,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .btn{
     display:inline-block; text-decoration:none; font-weight:600; font-size:.95rem;
     padding:13px 24px; border-radius:5px; cursor:pointer; border:1.5px solid transparent;
-    font-family:var(--);
+    font-family:var(--body);
   }
   .btn-primary{ background:var(--red); color:var(--white); }
   .btn-primary:hover{ background:#a91720; }
@@ -207,6 +208,39 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   .map-frame iframe{ width:100%; height:100%; border:0; filter:saturate(.85); }
 
+  /* ---------- Formulario de reserva ---------- */
+  .reserve-form{ max-width:640px; }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:18px; }
+  .reserve-form label{
+    display:flex; flex-direction:column; gap:7px;
+    font-size:.82rem; font-weight:600; color:var(--green-deep);
+  }
+  .form-full{ margin-bottom:18px; }
+  .reserve-form input,
+  .reserve-form select,
+  .reserve-form textarea{
+    font-family:var(--body); font-size:.95rem; color:var(--ink);
+    padding:11px 13px; border:1px solid var(--line); border-radius:5px;
+    background:var(--white); resize:vertical;
+  }
+  .reserve-form input:focus,
+  .reserve-form select:focus,
+  .reserve-form textarea:focus{ outline:none; border-color:var(--green); }
+  .form-success{
+    margin-top:16px; font-size:.92rem; font-weight:600; color:var(--green);
+  }
+
+  /* ---------- Botón flotante de WhatsApp ---------- */
+  .whatsapp-float{
+    position:fixed; bottom:26px; right:26px; z-index:50;
+    width:56px; height:56px; border-radius:50%;
+    background:var(--green); display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 28px rgba(14,51,32,.35);
+    transition:transform .15s ease;
+  }
+  .whatsapp-float:hover{ transform:scale(1.07); }
+  .whatsapp-float svg{ width:26px; height:26px; }
+
   /* ---------- Footer ---------- */
   footer{
     background:var(--ink); color:rgba(255,255,255,.7);
@@ -223,6 +257,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .hero-inner{ grid-template-columns:1fr; }
     .hero-badge{ order:-1; width:110px; justify-self:start; }
     .about, .menu-groups, .visit{ grid-template-columns:1fr; gap:40px; }
+    .form-row{ grid-template-columns:1fr; gap:18px; }
+    .whatsapp-float{ width:50px; height:50px; bottom:18px; right:18px; }
     nav.links{
       position:absolute; top:100%; left:0; right:0;
       background:var(--paper); border-bottom:1px solid var(--line);
@@ -240,6 +276,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQH6FL52"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
 <header class="nav">
   <div class="nav-inner">
     <a href="#top" class="brand">
@@ -251,7 +288,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="#menu">Menú</a>
       <a href="#futbol">Fútbol</a>
       <a href="#visitanos">Visitanos</a>
-      <a class="nav-cta" href="#visitanos">Reservar</a>
+      <a class="nav-cta" href="#reserva">Reservar</a>
     </nav>
     <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -384,8 +421,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
       <div class="futbol-cta">
-        <a class="btn btn-primary" href="#visitanos">Reservar tu lugar</a>
+        <a class="btn btn-primary" href="#reserva">Reservar tu lugar</a>
       </div>
+    </div>
+  </section>
+
+  <!-- ---------- Reservá tu mesa ---------- -->
+  <section id="reserva" style="background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Reservá tu mesa</h2>
+        <p>Contanos cuándo venís y para cuántos. Te confirmamos por WhatsApp o Instagram.</p>
+      </div>
+      <form class="reserve-form" id="reserveForm">
+        <div class="form-row">
+          <label>Nombre
+            <input type="text" name="nombre" required>
+          </label>
+          <label>WhatsApp o teléfono
+            <input type="tel" name="telefono" required>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Fecha
+            <input type="date" name="fecha" required>
+          </label>
+          <label>Cantidad de personas
+            <select name="personas">
+              <option>1-2 personas</option>
+              <option>3-4 personas</option>
+              <option>5-6 personas</option>
+              <option>7 o más</option>
+            </select>
+          </label>
+        </div>
+        <label class="form-full">Partido que van a ver (opcional)
+          <input type="text" name="partido" placeholder="Ej: River vs. Racing">
+        </label>
+        <label class="form-full">Mensaje
+          <textarea name="mensaje" rows="3" placeholder="Alguna aclaración para la reserva..."></textarea>
+        </label>
+        <button type="submit" class="btn btn-primary">Enviar reserva</button>
+        <p class="form-success" id="formSuccess" hidden>¡Gracias! Recibimos tu reserva y te confirmamos por WhatsApp.</p>
+      </form>
     </div>
   </section>
 
@@ -403,8 +481,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li><span class="k">Días de partido</span>Abrimos una hora antes del inicio</li>
           <li><span class="k">Contacto</span>@lagambeta.pizzeria en Instagram</li>
         </ul>
-        <a class="btn btn-outline" style="border-color:var(--green); color:var(--green);"
-           href="https://instagram.com" target="_blank" rel="noopener">Escribinos por Instagram</a>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="https://wa.me/5491112345678?text=Hola%20La%20Gambeta%2C%20quiero%20reservar%20una%20mesa"
+             target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+          <a class="btn btn-outline" style="border-color:var(--green); color:var(--green);"
+             href="https://instagram.com" target="_blank" rel="noopener">Escribinos por Instagram</a>
+        </div>
       </div>
       <div class="map-frame">
         <iframe
@@ -415,6 +497,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
 </main>
+
+<a class="whatsapp-float" href="https://wa.me/5491112345678?text=Hola%20La%20Gambeta%2C%20quiero%20hacer%20una%20consulta"
+   target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 3a9 9 0 0 0-7.75 13.55L3 21l4.6-1.2A9 9 0 1 0 12 3Z" stroke="#ffffff" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M8.6 8.4c.2-.5.4-.5.6-.5h.5c.15 0 .35 0 .5.4.2.5.6 1.5.65 1.6.05.1.1.25 0 .4-.1.15-.15.25-.3.4-.15.15-.3.3-.4.4-.15.15-.3.3-.15.55.4.6.9 1.1 1.5 1.5.6.4 1 .5 1.15.4.15-.1.3-.25.45-.4.15-.15.3-.2.45-.15.15.05 1 .5 1.2.6.2.1.35.15.4.25.05.1.05.55-.15 1.05-.2.5-1.1.95-1.5 1-.4.05-.8.1-2.6-.65-1.8-.75-2.9-2.5-3-2.65-.1-.15-.8-1.05-.8-2.05s.5-1.5.7-1.7Z" fill="#ffffff"/>
+  </svg>
+</a>
 
 <footer>
   <div class="wrap footer-inner">
@@ -432,6 +522,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   toggle.addEventListener('click', function(){
     var isOpen = links.classList.toggle('open');
     toggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  // Formulario de reserva: como el sitio es estático, no hay backend real
+  // que reciba los datos. Al enviarlo, se valida, se muestra la
+  // confirmación y se limpia el formulario.
+  var reserveForm = document.getElementById('reserveForm');
+  var formSuccess = document.getElementById('formSuccess');
+  reserveForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!reserveForm.checkValidity()){
+      reserveForm.reportValidity();
+      return;
+    }
+    formSuccess.hidden = false;
+    reserveForm.reset();
   });
 </script>
 
